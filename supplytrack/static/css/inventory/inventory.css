@@ -1,0 +1,151 @@
+/* Layout container */
+.inventory-layout {
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+    padding: 20px;
+    flex-wrap: wrap;
+    width: 80%;
+    box-sizing: border-box;
+    margin-left: 290px;
+}
+
+/* Inventory panel */
+.inventory-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    flex: 1 1 600px;
+    min-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+/* Search bar fix */
+.search-input {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Table wrapper */
+.table-wrapper {
+    height: 500px;
+    overflow-x: auto;
+}
+
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inventory-table th,
+.inventory-table td {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+    font-size: 14px;
+}
+
+.inventory-table th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+
+.inventory-table tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+.inventory-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Floating + button */
+.fab {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background-color: #333;
+    color: white;
+    font-size: 28px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.fab:hover {
+    background-color: #555;
+}
+
+/* Add product form panel */
+.form-panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    flex: 1 1 300px;
+    max-width: 350px;
+    min-width: 300px;
+}
+
+.form-panel form p {
+    margin-bottom: 15px;
+}
+
+.form-panel input,
+.form-panel select,
+.form-panel textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.submit-btn {
+    margin-top: 10px;
+    padding: 12px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.submit-btn:hover {
+    background-color: #555;
+}
+
+/* Hidden class */
+.hidden {
+    display: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .inventory-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .inventory-panel, .form-panel {
+        width: 100%;
+    }
+
+    .fab {
+        right: 16px;
+        bottom: 16px;
+    }
+}

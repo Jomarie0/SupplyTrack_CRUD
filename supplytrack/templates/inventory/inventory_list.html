@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/inventory/inventory.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Inventory</h1>
+
+<div class="inventory-layout">
+    <div class="inventory-panel">
+        <!-- Search bar -->
+        <form method="get" action="" class="search-bar">
+            <input
+                type="text"
+                name="q"
+                class="search-input"
+                placeholder="Search by any field..."
+                value="{{ query|default:'' }}"
+            />
+            <button type="submit" class="search-btn">Search</button>
+        </form>
+
+        <!-- Inventory table -->
+        <div class="table-wrapper">
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Product Type</th>
+                        <th>Unit</th>
+                        <th>Brand</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Batch</th>
+                        <th>Expiration</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.product_id }}</td>
+                            <td>{{ product.product_name }}</td>
+                            <td>{{ product.product_type }}</td>
+                            <td>{{ product.unit_size }}</td>
+                            <td>{{ product.brand }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.date_received }}</td>
+                            <td>{{ product.batch_number }}</td>
+                            <td>{{ product.expiration_date }}</td>
+                            <td>
+                                <a href="{% url 'inventory:product_edit' product.id %}" class="action-btn edit">Edit</a>
+                                <a href="{% url 'inventory:product_delete' product.id %}" class="action-btn delete">Delete</a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="10">No products found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Floating button -->
+        <button class="fab" onclick="toggleForm()">+</button>
+    </div>
+
+    <!-- Add product form -->
+    <div id="formPanel" class="form-panel hidden">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="submit-btn">Add Product</button>
+        </form>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        {% if products.has_previous %}
+            <a href="?q={{ query }}&page={{ products.previous_page_number }}">&laquo; Prev</a>
+        {% endif %}
+
+        <span>Page {{ products.number }} of {{ products.paginator.num_pages }}</span>
+
+        {% if products.has_next %}
+            <a href="?q={{ query }}&page={{ products.next_page_number }}">Next &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+
+
+<script>
+    function toggleForm() {
+        const formPanel = document.getElementById("formPanel");
+        formPanel.classList.toggle("hidden");
+    }
+
+    document.querySelector('.search-input').addEventListener('input', function (e) {
+        const keyword = e.target.value.toLowerCase();
+        const rows = document.querySelectorAll('.inventory-table tbody tr');
+
+        rows.forEach(row => {
+            const name = row.children[0].textContent.toLowerCase(); // first <td> is product name
+            if (name.includes(keyword)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', function (e) {
+        const keyword = e.target.value.trim().toLowerCase();
+        const rows = document.querySelectorAll('.inventory-table tbody tr');
+        rows.forEach(row => {
+            if (!keyword || row.textContent.toLowerCase().includes(keyword)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+</script>
+
+{% endblock %}

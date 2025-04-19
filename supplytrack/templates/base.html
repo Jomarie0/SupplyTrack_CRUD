@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SupplyTrack</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="brand">SupplyTrack</div>
+            <ul class="nav">
+                <li><a href="{% url 'dashboard:home' %}">Dashboard</a></li>
+                <li><a href="{% url 'inventory:inventory_list' %}">Inventory</a></li>
+                <li><a href="{% url 'orders:order_list' %}">Orders</a></li>
+                <li><a href="{% url 'users:user_list' %}">User Management</a></li>
+                <li><a href="#">Transaction History</a></li>
+                <li><a href="#">Reports & Analytics</a></li>
+                <li><a href="#">System Logs</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </div>
+        <div class="main">
+            <header class="main-header">
+                <div class="user-info">
+                    <span>{{ user.username }}</span><br>
+                    <small>Admin</small>
+                </div>
+            </header>
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

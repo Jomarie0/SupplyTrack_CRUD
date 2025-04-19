@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/inventory/inventory.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Stock Levels by Product</h2>
+
+<div id="stock-chart" style="width:100%; height:400px;"></div>
+
+<!-- Plotly.js CDN -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<script>
+    const labels = {{ labels|safe }};
+    const values = {{ values|safe }};
+
+    const data = [{
+        x: labels,
+        y: values,
+        type: 'bar',
+        marker: { color: 'rgba(100, 200, 250, 0.6)' }
+    }];
+
+    const layout = {
+        title: 'Stock Quantity per Product',
+        xaxis: { title: 'Product' },
+        yaxis: { title: 'Stock Quantity' }
+    };
+
+    Plotly.newPlot('stock-chart', data, layout);
+</script>
+{% endblock %}
